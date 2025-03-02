@@ -12,9 +12,9 @@ app.use(cors());
 app.use(require('./routes/routes')); // This should work now if routes.js is properly set up
 
 // Root route
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+// app.get('/', (req, res) => {
+//     res.send('Hello World!');
+// });
 
 // Start the server
 app.listen(port, () => {

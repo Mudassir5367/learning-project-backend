@@ -3,19 +3,19 @@ const bcrypt = require('bcrypt');
 
 
 const regiter = async(req,res)=>{
-    const {fullname, username, phone, email,password, cPassword} = req.body;
-    if(!fullname || !username || !password || !cPassword || !email || !phone){
+    const {fullname, username, email,password} = req.body;
+    if(!fullname || !username || !password || !email){
         return res.status(400).json({msg: 'Please fill all fields'})
     }
-    if (password !== confirmPassword) {
-        return res.status(400).json({ msg: 'Passwords do not match' });
-    }
+    // if (password !== confirmPassword) {
+    //     return res.status(400).json({ msg: 'Passwords do not match' });
+    // }
     try {
         const loginUser = await User.findOne({email: email})
         if(loginUser){
             return res.status(200).json({msg:'user already exists'})
         }else{
-            const user = new User({fullname, username, phone, email, password, cPassword})
+            const user = new User({fullname, username, email, password})
             
             await user.save()
             console.log('user data added to the database');

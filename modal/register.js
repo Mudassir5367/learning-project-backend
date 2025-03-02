@@ -10,11 +10,11 @@ const userSchema = new mongoose.Schema({
         required:true,
         unique:true,
     },
-    phone:{
-        type:Number,
-        required:true,
-        unique:true,
-    },
+    // phone:{
+    //     type:Number,
+    //     required:true,
+    //     unique:true,
+    // },
     email:{
         type:String,
         required:true,
@@ -24,16 +24,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    cPassword:{
-        type:String,
-        required:true,
-        validate: {
-            validator: function(cpassword) {
-                return this.password === cpassword;
-            },
-            message: "Passwords do not match."
-        }
-    }
+    // confirmPassword:{
+    //     type:String,
+    //     required:true,
+    // }
 })
 
 userSchema.pre('save', async function(next){
