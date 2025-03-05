@@ -7,7 +7,7 @@ const regiter = async(req,res)=>{
     if(!fullname || !username || !password || !email){
         return res.status(400).json({msg: 'Please fill all fields'})
     }
-    // if (password !== confirmPassword) {
+    // if (password !== confirmPassword) { 
     //     return res.status(400).json({ msg: 'Passwords do not match' });
     // }
     try {
