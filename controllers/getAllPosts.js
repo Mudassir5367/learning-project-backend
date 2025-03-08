@@ -1,0 +1,13 @@
+const AllPosts = require('../modal/all_posts');
+
+const getAllPosts = async (req, res) => {
+    try {
+        const data = await AllPosts.find({});
+        
+        return res.status(200).json({ success: true, data });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: 'Server Error', error: error.message });
+    }
+};
+
+module.exports = getAllPosts;
