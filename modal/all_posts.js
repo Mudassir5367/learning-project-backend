@@ -3,17 +3,22 @@ const mongoose = require('mongoose')
 const allPosts = new mongoose.Schema({
     body:{
         type:String,
-        unique: true, 
-        required: true 
+        required: true,
     },
     id:{
-        type:Number
+        type:Number,
     },
-    userId:{
-        type:Number
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true, // Ensures every post has a userId
     },
     title:{
-        type:String
+    type:String,
+    },
+    createdAt:{
+    type: Date,
+    default: Date.now 
     }
 })
 
