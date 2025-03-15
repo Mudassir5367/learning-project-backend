@@ -1,28 +1,40 @@
-const AllPosts = require('../modal/all_posts');
+const Posts = require('../modal/all_posts');
+const mongoose = require('mongoose');
 
 const allPosts = async (req, res) => {
     try {
-        let allPosts = req.body;
-        allPosts = Array.isArray(allPosts) ? allPosts : [allPosts];
-        
-        const data = [];
-        
-        for (const post of allPosts) {
-            const savedPost = await AllPosts.findOneAndUpdate(
-                { id: post.id }, 
-                post,
-                { upsert: true, new: true, setDefaultsOnInsert: true } 
-            );
-            data.push(savedPost);
+        const { title, id, body } = req.body;
+
+        if (!id || isNaN(id)) {
+            return res.status(400).json({success: false, error: "Invalid or missing ID" });
         }
-        
-        if (data.length > 0) {
-            return res.status(201).json({ message: "Posts added/updated successfully", success: true });
-        } else {
-            return res.status(200).json({ message: "No new Post was added (duplicates found)", success: false });
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({success: false, error: "Unauthorized: User ID missing" });
         }
+
+        const userId = req.user._id; 
+
+        // Check if post already exists
+        const existingPost = await Posts.findOne({ id: id });
+        if (existingPost) {
+            console.log('Post with the same ID already exists');
+            return res.status(400).json({success: false, msg: 'Post with the same ID already exists' });
+        }
+
+        // Create and save new post
+        const newPost = new Posts({ 
+            title,
+            id: Number(id),
+            userId, 
+            body,
+        });
+
+        await newPost.save();
+        return res.status(201).json({ message: 'Custom post created successfully' });
+
     } catch (error) {
-        res.status(500).json({ message: "Error adding posts", error });
+        console.error('Error creating custom post:', error.message);
+        return res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
 };
 

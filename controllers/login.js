@@ -6,7 +6,7 @@ const login = async (req, res) =>{
         const { email, password } = req.body;
 
         // Check if user exists
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email:email });
         if (!user) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
@@ -18,7 +18,7 @@ const login = async (req, res) =>{
         }
 
         // Generate JWT token
-        const payload = { userId: user._id };
+        const payload = { _id: user._id };
         const token = jwt.sign(payload, 'SECRET_KEY');
 
         res.status(200).json({ 

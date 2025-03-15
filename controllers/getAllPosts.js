@@ -2,7 +2,8 @@ const AllPosts = require('../modal/all_posts');
 
 const getAllPosts = async (req, res) => {
     try {
-        const data = await AllPosts.find({});
+        const userId = req.user._id;
+        const data = await AllPosts.find({ userId: req.user._id }).sort({ createdAt: -1 });
         
         return res.status(200).json({ success: true, data });
     } catch (error) {

@@ -10,7 +10,7 @@ const getAllPosts = require('../controllers/getAllPosts' )
 
 router.post('/api/register', rejister)
 router.post('/api/login', login)
-router.post('/api/allPosts', allPosts)
+router.post('/api/customPosts',authentication, allPosts)
 router.get('/api/getAllPosts', authentication, getAllPosts)
 
 module.exports = router
