@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-require('./db/db'); // Assuming your db connection file is correct
+require('./db/db'); 
 const cors = require('cors');
 const port = 3000;
 
@@ -14,12 +14,7 @@ app.use(cors({
   
 
 // Use the routes
-app.use(require('./routes/routes')); // This should work now if routes.js is properly set up
-
-// Root route
-// app.get('/', (req, res) => {
-//     res.send('Hello World!');
-// });
+app.use(require('./routes/routes')); 
 
 // Start the server
 app.listen(port, () => {
